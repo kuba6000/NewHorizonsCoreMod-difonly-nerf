@@ -4922,13 +4922,13 @@ public class ScriptMinecraft implements IScriptLoader {
         addShapedRecipe(
                 getModItem(Minecraft.ID, "flint_and_steel", 1, 0, missing),
                 null,
-                "gearGtSmallSteel",
+                "gearSteel",
                 null,
                 null,
                 getModItem(Minecraft.ID, "flint", 1, 0, missing),
                 null,
                 null,
-                "springSmallSteel",
+                "springSteel",
                 null);
         addShapedRecipe(
                 getModItem(Minecraft.ID, "shears", 1, 0, missing),
