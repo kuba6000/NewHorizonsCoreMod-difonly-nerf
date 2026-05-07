@@ -1135,17 +1135,9 @@ public class BlastFurnaceRecipes implements Runnable {
         GTValues.RA.stdBuilder()
                 .itemInputs(
                         GTOreDictUnificator.get(OrePrefixes.dust, Materials.StainlessSteel, 1L),
-                        GTUtility.getIntegratedCircuit(1))
-                .itemOutputs(GTOreDictUnificator.get(OrePrefixes.ingot, Materials.StainlessSteel, 1L))
-                .duration(1 * MINUTES + 25 * SECONDS).eut(TierEU.RECIPE_HV).metadata(COIL_HEAT, 1700)
-                .addTo(blastFurnaceRecipes);
-
-        GTValues.RA.stdBuilder()
-                .itemInputs(
-                        GTOreDictUnificator.get(OrePrefixes.dust, Materials.StainlessSteel, 1L),
                         GTUtility.getIntegratedCircuit(11))
                 .itemOutputs(GTOreDictUnificator.get(OrePrefixes.ingot, Materials.StainlessSteel, 1L))
-                .fluidInputs(Materials.Oxygen.getGas(1000L)).duration(60 * SECONDS).eut(TierEU.RECIPE_HV)
+                .fluidInputs(Materials.Nitrogen.getGas(1000L)).duration(240 * SECONDS).eut(TierEU.RECIPE_HV)
                 .metadata(COIL_HEAT, 1700).addTo(blastFurnaceRecipes);
 
         GTValues.RA.stdBuilder()
