@@ -316,7 +316,7 @@ public class AssemblerRecipes implements Runnable {
         GTValues.RA.stdBuilder()
                 .itemInputs(
                         GTOreDictUnificator.get(OrePrefixes.wireGt02, Materials.SuperconductorLuV, 128L),
-                        NHItemList.MicaInsulatorFoil.get(384L))
+                        NHItemList.MicaInsulatorFoil.get(384))
                 .itemOutputs(ItemList.Casing_Coil_Superconductor.get(1L))
                 .fluidInputs(Materials.Trinium.getMolten(1440L)).duration(50 * SECONDS).eut(9001)
                 .addTo(assemblerRecipes);

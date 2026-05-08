@@ -23,7 +23,6 @@ import goodgenerator.items.GGMaterial;
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
-import gregtech.api.enums.MaterialsOreAlum;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
 import gregtech.api.util.GTOreDictUnificator;
@@ -535,7 +534,7 @@ public class BlastFurnaceRecipes implements Runnable {
                 .itemOutputs(
                         GTOreDictUnificator.get(OrePrefixes.ingot, Materials.WroughtIron, 2L),
                         GTOreDictUnificator.get(OrePrefixes.dust, Materials.Rutile, 6L),
-                        GTOreDictUnificator.get(OrePrefixes.dust, MaterialsOreAlum.IlmeniteSlag, 1L))
+                        GTOreDictUnificator.get(OrePrefixes.dust, Materials.IlmeniteSlag, 1L))
                 .fluidOutputs(Materials.CarbonMonoxide.getGas(2000L)).duration(5 * MINUTES).eut(TierEU.RECIPE_HV)
                 .metadata(COIL_HEAT, 1700).addTo(blastFurnaceRecipes);
 
