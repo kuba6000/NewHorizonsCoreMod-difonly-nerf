@@ -765,7 +765,7 @@ public class CircuitAssemblerRecipes implements Runnable {
                             ItemList.Circuit_Parts_Capacitor.get(24),
                             ItemList.Circuit_Chip_Ram.get(16L),
                             GTOreDictUnificator.get(OrePrefixes.wireGt01, Materials.AnnealedCopper, 24))
-                    .itemOutputs(ItemList.Circuit_Elite.get(1L)).fluidInputs(tMat.getMolten(144L * tMultiplier * 2))
+                    .itemOutputs(ItemList.Circuit_Elite.get(1L)).fluidInputs(MaterialsElements.SoulInfusedMedium.getMolten(100L))
                     .requiresCleanRoom().duration(1 * MINUTES + 20 * SECONDS).eut(TierEU.RECIPE_HV)
                     .addTo(circuitAssemblerRecipes);
 
@@ -777,7 +777,7 @@ public class CircuitAssemblerRecipes implements Runnable {
                             ItemList.Circuit_Parts_CapacitorASMD.get(4L),
                             ItemList.Circuit_Chip_Ram.get(16L),
                             GTOreDictUnificator.get(OrePrefixes.wireGt01, Materials.AnnealedCopper, 16))
-                    .itemOutputs(ItemList.Circuit_Elite.get(1L)).fluidInputs(tMat.getMolten(144L * tMultiplier * 2))
+                    .itemOutputs(ItemList.Circuit_Elite.get(1L)).fluidInputs(MaterialsElements.SoulInfusedMedium.getMolten(100L))
                     .requiresCleanRoom().duration(40 * SECONDS).eut(TierEU.RECIPE_HV).addTo(circuitAssemblerRecipes);
 
             // Nanotech Circuits
