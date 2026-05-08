@@ -13,10 +13,10 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.dreammaster.lib.Refstrings;
 import com.gtnewhorizon.gtnhmixins.IEarlyMixinLoader;
 
 import cpw.mods.fml.relauncher.FMLLaunchHandler;
@@ -27,17 +27,19 @@ import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
 public class DreamCoreMod implements IEarlyMixinLoader, IFMLLoadingPlugin {
 
     public static Logger logger = LogManager.getLogger("DreamCoreMod");
-    static Properties coremodConfig = new Properties();
-    public static File debugOutputDir;
-    public static boolean deobf;
+    public static Properties coremodConfig = new Properties();
+    public static File coremodConfigFile;
+    private static Boolean isObf;
+    private static boolean modpackHasUpdated;
 
     public static boolean showConfirmExitWindow;
     public static boolean patchItemFocusWarding;
     static boolean downloadOnlyOnce;
+    static String downloadUA;
 
     @Override
     public String[] getASMTransformerClass() {
-        return new String[] { DreamClassTransformer.class.getName() };
+        return new String[] { "com.dreammaster.coremod.DreamClassTransformer" };
     }
 
     @Override
@@ -52,16 +54,20 @@ public class DreamCoreMod implements IEarlyMixinLoader, IFMLLoadingPlugin {
 
     @Override
     public void injectData(Map<String, Object> data) {
-        deobf = !(boolean) data.get("runtimeDeobfuscationEnabled");
+        isObf = (boolean) data.get("runtimeDeobfuscationEnabled");
         coremodConfig.setProperty("showConfirmExitWindow", "true");
         coremodConfig.setProperty("patchItemFocusWarding", "true");
         coremodConfig.setProperty("downloadOnlyOnce", "true");
-        coremodConfig.setProperty("debug", "false");
         File mcLocation = (File) data.get("mcLocation");
         File configDir = new File(mcLocation, "config");
         // noinspection ResultOfMethodCallIgnored
         configDir.mkdir();
         File config = new File(configDir, "DreamCoreMod.properties");
+        File modpackUpdate = new File(configDir, "modpack-update");
+        if (modpackUpdate.exists()) {
+            modpackHasUpdated = true;
+        }
+        coremodConfigFile = config;
         try (Reader r = new FileReader(config)) {
             coremodConfig.load(r);
         } catch (FileNotFoundException ignored) {
@@ -69,6 +75,10 @@ public class DreamCoreMod implements IEarlyMixinLoader, IFMLLoadingPlugin {
         } catch (IOException e) {
             logger.warn("Can't read coremod config. Proceeding with defaults!", e);
         }
+        if (!Refstrings.VERSION.equals(coremodConfig.get("savedVersion"))) {
+            modpackHasUpdated = true;
+        }
+        coremodConfig.setProperty("savedVersion", Refstrings.VERSION);
         try (Writer r = new FileWriter(config)) {
             coremodConfig.store(r, "Config file for the ASM part of GTNHCoreMod");
         } catch (IOException e) {
@@ -77,19 +87,9 @@ public class DreamCoreMod implements IEarlyMixinLoader, IFMLLoadingPlugin {
         showConfirmExitWindow = "true".equalsIgnoreCase(coremodConfig.getProperty("showConfirmExitWindow"));
         patchItemFocusWarding = "true".equalsIgnoreCase(coremodConfig.getProperty("patchItemFocusWarding"));
         downloadOnlyOnce = "true".equalsIgnoreCase(coremodConfig.getProperty("downloadOnlyOnce"));
-        if ("true".equalsIgnoreCase(coremodConfig.getProperty("debug"))) {
-            debugOutputDir = new File(mcLocation, ".asm_debug");
-            try {
-                if (debugOutputDir.exists()) FileUtils.deleteDirectory(debugOutputDir);
-            } catch (IOException e) {
-                logger.warn("Can't remove old debug stuff. Debug will be effective turned off!", e);
-                debugOutputDir = null;
-            }
-            if (debugOutputDir != null && !debugOutputDir.mkdir()) {
-                logger.warn("Can't make debug output dir. Debug will be effective turned off");
-                debugOutputDir = null;
-            }
-        }
+        downloadUA = coremodConfig.getProperty(
+                "downloadUA",
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:147.0) Gecko/20100101 Firefox/147.0");
     }
 
     @Override
@@ -108,9 +108,41 @@ public class DreamCoreMod implements IEarlyMixinLoader, IFMLLoadingPlugin {
         if (FMLLaunchHandler.side().isClient()) {
             mixins.add("MixinMinecraft_ConfirmExit");
             mixins.add("MixinMinecraft_PackIcon");
+
+            // neuter Open to LAN
+            mixins.add("MixinIntegratedServer");
+            mixins.add("MixinGuiShareToLan");
         }
         mixins.add("MixinTileEntityBeacon");
         return mixins;
+    }
+
+    /**
+     * Disable to show the confirm exit window, and save it to the config.
+     */
+    public static void disableShowConfirmExitWindow() {
+        showConfirmExitWindow = false;
+        coremodConfig.setProperty("showConfirmExitWindow", "false");
+        try (Writer w = new FileWriter(coremodConfigFile)) {
+            coremodConfig.store(w, "Config file for the ASM part of GTNHCoreMod");
+        } catch (IOException e) {
+            logger.warn("Can't save coremod config.", e);
+        }
+    }
+
+    public static boolean isObf() {
+        if (isObf == null) {
+            throw new IllegalStateException("Obfuscation stated accessed too early!");
+        }
+        return isObf;
+    }
+
+    /**
+     * Returns true if the file "modpack-update" is present in the config folder which means the modpack has just been
+     * updated, and it's the first time the game is running after the update.
+     */
+    public static boolean modpackHasUpdated() {
+        return modpackHasUpdated;
     }
 
 }

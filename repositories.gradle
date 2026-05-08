@@ -3,7 +3,7 @@
 repositories {
     mavenLocal()
     ivy {
-        url 'https://files.vexatos.com/'
+        url = uri('https://files.vexatos.com/')
         patternLayout {
             artifact "[module]/[artifact]-[revision](-[classifier])(.[ext])"
         }
@@ -12,6 +12,17 @@ repositories {
         }
         metadataSources {
             artifact()
+        }
+    }
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = 'glease'
+                url = uri('https://maven.glease.net/repos/releases/')
+            }
+        }
+        filter {
+            includeGroup('net.glease')
         }
     }
 }

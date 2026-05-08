@@ -1,14 +1,14 @@
 package com.dreammaster.scripts;
 
+import static com.dreammaster.scripts.IngredientFactory.getModItem;
 import static gregtech.api.enums.Mods.EternalSingularity;
 import static gregtech.api.enums.Mods.Forestry;
-import static gregtech.api.enums.Mods.GregTech;
 import static gregtech.api.enums.Mods.IndustrialCraft2;
 import static gregtech.api.enums.Mods.IronTanks;
 import static gregtech.api.enums.Mods.Minecraft;
 import static gregtech.api.enums.Mods.RemoteIO;
+import static gregtech.api.enums.Mods.Thaumcraft;
 import static gregtech.api.recipe.RecipeMaps.assemblerRecipes;
-import static gregtech.api.util.GTModHandler.getModItem;
 import static gregtech.api.util.GTRecipeBuilder.SECONDS;
 import static gregtech.api.util.GTRecipeConstants.QFT_CATALYST;
 import static gregtech.api.util.GTRecipeConstants.QFT_FOCUS_TIER;
@@ -19,19 +19,18 @@ import java.util.List;
 
 import net.minecraftforge.fluids.FluidRegistry;
 
-import com.dreammaster.gthandler.CustomItemList;
+import com.dreammaster.block.BlockList;
 import com.dreammaster.item.NHItemList;
+import com.dreammaster.thaumcraft.TCMaterialAspectHelper;
 
 import cpw.mods.fml.common.Optional;
 import forestry.api.recipes.RecipeManagers;
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
-import gregtech.api.enums.MaterialsUEVplus;
 import gregtech.api.enums.Mods;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
-import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
 import gtPlusPlus.core.material.MaterialsAlloy;
 import gtPlusPlus.xmod.gregtech.api.enums.GregtechItemList;
@@ -46,79 +45,45 @@ public class ScriptGregtechPlusPlus implements IScriptLoader {
     @Override
     public List<String> getDependencies() {
         return Arrays.asList(
-                Mods.GTPlusPlus.ID,
+                EternalSingularity.ID,
                 Forestry.ID,
                 IndustrialCraft2.ID,
                 IronTanks.ID,
                 RemoteIO.ID,
-                EternalSingularity.ID,
-                GregTech.ID);
+                Thaumcraft.ID);
     }
 
     @Override
     public void loadRecipes() {
 
-        addShapedRecipe(
-                MaterialsAlloy.TUMBAGA.getRod(1),
-                "craftingToolFile",
-                null,
-                null,
-                null,
-                MaterialsAlloy.TUMBAGA.getIngot(1),
-                null,
-                null,
-                null,
-                null);
-        addShapedRecipe(
-                MaterialsAlloy.TUMBAGA.getFrameBox(2),
-                MaterialsAlloy.TUMBAGA.getRod(1),
-                MaterialsAlloy.TUMBAGA.getRod(1),
-                MaterialsAlloy.TUMBAGA.getRod(1),
-                MaterialsAlloy.TUMBAGA.getRod(1),
-                "craftingToolWrench",
-                MaterialsAlloy.TUMBAGA.getRod(1),
-                MaterialsAlloy.TUMBAGA.getRod(1),
-                MaterialsAlloy.TUMBAGA.getRod(1),
-                MaterialsAlloy.TUMBAGA.getRod(1));
-        addShapedRecipe(
-                MaterialsAlloy.TUMBAGA.getGear(1),
-                MaterialsAlloy.TUMBAGA.getRod(1),
-                MaterialsAlloy.TUMBAGA.getPlate(1),
-                MaterialsAlloy.TUMBAGA.getRod(1),
-                MaterialsAlloy.TUMBAGA.getPlate(1),
-                "craftingToolWrench",
-                MaterialsAlloy.TUMBAGA.getPlate(1),
-                MaterialsAlloy.TUMBAGA.getRod(1),
-                MaterialsAlloy.TUMBAGA.getPlate(1),
-                MaterialsAlloy.TUMBAGA.getRod(1));
-
         // Fish Trap
         addShapedRecipe(
                 GregtechItemList.FishTrap.get(1),
-                NHItemList.SteelBars.getIS(),
-                NHItemList.SteelBars.getIS(),
-                NHItemList.SteelBars.getIS(),
-                NHItemList.SteelBars.getIS(),
+                BlockList.SteelBars.get(),
+                BlockList.SteelBars.get(),
+                BlockList.SteelBars.get(),
+                BlockList.SteelBars.get(),
                 GTOreDictUnificator.get(OrePrefixes.frameGt, Materials.WroughtIron, 1),
-                NHItemList.SteelBars.getIS(),
-                NHItemList.SteelBars.getIS(),
-                NHItemList.SteelBars.getIS(),
-                NHItemList.SteelBars.getIS());
+                BlockList.SteelBars.get(),
+                BlockList.SteelBars.get(),
+                BlockList.SteelBars.get(),
+                BlockList.SteelBars.get());
 
         // Shirabon and Eternity
         GTValues.RA.stdBuilder()
                 .itemInputs(
-                        getModItem(EternalSingularity.ID, "combined_singularity", 1, 15, missing),
+                        getModItem(EternalSingularity.ID, "combined_singularity", 1, 15),
                         ItemList.EnergisedTesseract.get(1))
                 .itemOutputs(GTOreDictUnificator.get("dustShirabon", 64), ItemList.Timepiece.get(1))
-                .fluidInputs(MaterialsUEVplus.PrimordialMatter.getFluid(1152))
-                .fluidOutputs(MaterialsUEVplus.Eternity.getMolten(9216), MaterialsUEVplus.Time.getMolten(18432))
+                .fluidInputs(Materials.PrimordialMatter.getFluid(1152))
+                .fluidOutputs(Materials.Eternity.getMolten(9216), Materials.Time.getMolten(18432))
                 .metadata(QFT_CATALYST, GregtechItemList.TemporalHarmonyCatalyst.get(0)).metadata(QFT_FOCUS_TIER, 4)
                 .duration(20 * SECONDS).eut(TierEU.RECIPE_UMV).addTo(quantumForceTransformerRecipes);
         addForestryRecipes();
+        addThaumcraftAspects();
     }
 
-    @Optional.Method(modid = Mods.Names.FORESTRY)
+    @Optional.Method(modid = Mods.ModIDs.FORESTRY)
     private void addForestryRecipes() {
 
         // Arborist Frame
@@ -126,8 +91,8 @@ public class ScriptGregtechPlusPlus implements IScriptLoader {
                 .itemInputs(
                         GTOreDictUnificator.get(OrePrefixes.stickLong, Materials.WoodSealed, 4),
                         GTOreDictUnificator.get(OrePrefixes.stick, Materials.WoodSealed, 4),
-                        GTModHandler.getModItem(Minecraft.ID, "paper", 1, 0, missing),
-                        GTModHandler.getModItem(Forestry.ID, "frameImpregnated", 1, 0, missing))
+                        getModItem(Minecraft.ID, "paper", 1, 0),
+                        getModItem(Forestry.ID, "frameImpregnated", 1, 0))
                 .fluidInputs(Materials.Redstone.getMolten(576)).itemOutputs(GregtechItemList.HiveFrameArborist.get(1))
                 .duration(30 * SECONDS).eut(TierEU.RECIPE_HV).addTo(assemblerRecipes);
 
@@ -137,7 +102,7 @@ public class ScriptGregtechPlusPlus implements IScriptLoader {
                         GTOreDictUnificator.get(OrePrefixes.stickLong, Materials.Osmiridium, 4),
                         GTOreDictUnificator.get(OrePrefixes.stick, Materials.Osmiridium, 4),
                         GTOreDictUnificator.get(OrePrefixes.foil, Materials.Osmiridium, 1),
-                        GTModHandler.getModItem(Forestry.ID, "frameImpregnated", 1, 0, missing))
+                        getModItem(Forestry.ID, "frameImpregnated", 1, 0))
                 .fluidInputs(Materials.Redstone.getMolten(576)).itemOutputs(GregtechItemList.HiveFrameStabilize.get(1))
                 .duration(30 * SECONDS).eut(TierEU.RECIPE_HV).addTo(assemblerRecipes);
 
@@ -147,7 +112,7 @@ public class ScriptGregtechPlusPlus implements IScriptLoader {
                         MaterialsAlloy.TUMBAGA.getLongRod(4),
                         MaterialsAlloy.TUMBAGA.getRod(4),
                         GTOreDictUnificator.get(OrePrefixes.foil, Materials.Electrum, 1),
-                        GTModHandler.getModItem(Forestry.ID, "frameImpregnated", 1, 0, missing))
+                        getModItem(Forestry.ID, "frameImpregnated", 1, 0))
                 .fluidInputs(Materials.Redstone.getMolten(576)).itemOutputs(GregtechItemList.HiveFrameSlow.get(1))
                 .duration(30 * SECONDS).eut(TierEU.RECIPE_HV).addTo(assemblerRecipes);
 
@@ -157,7 +122,7 @@ public class ScriptGregtechPlusPlus implements IScriptLoader {
                         GTOreDictUnificator.get(OrePrefixes.stickLong, Materials.WroughtIron, 4),
                         GTOreDictUnificator.get(OrePrefixes.stick, Materials.WroughtIron, 4),
                         GTOreDictUnificator.get(OrePrefixes.foil, Materials.WroughtIron, 1),
-                        GTModHandler.getModItem(Forestry.ID, "frameImpregnated", 1, 0, missing))
+                        getModItem(Forestry.ID, "frameImpregnated", 1, 0))
                 .fluidInputs(Materials.Redstone.getMolten(576)).itemOutputs(GregtechItemList.HiveFrameDecay.get(1))
                 .duration(30 * SECONDS).eut(TierEU.RECIPE_HV).addTo(assemblerRecipes);
 
@@ -167,7 +132,7 @@ public class ScriptGregtechPlusPlus implements IScriptLoader {
                         GTOreDictUnificator.get(OrePrefixes.stickLong, Materials.BlueSteel, 4),
                         GTOreDictUnificator.get(OrePrefixes.stick, Materials.BlueSteel, 4),
                         GTOreDictUnificator.get(OrePrefixes.gem, Materials.NetherStar, 1),
-                        GTModHandler.getModItem(Forestry.ID, "frameImpregnated", 1, 0, missing))
+                        getModItem(Forestry.ID, "frameImpregnated", 1, 0))
                 .fluidInputs(Materials.Redstone.getMolten(576)).itemOutputs(GregtechItemList.HiveFrameBusy.get(1))
                 .duration(30 * SECONDS).eut(TierEU.RECIPE_HV).addTo(assemblerRecipes);
 
@@ -177,7 +142,7 @@ public class ScriptGregtechPlusPlus implements IScriptLoader {
                         GTOreDictUnificator.get(OrePrefixes.stickLong, Materials.Uranium235, 4),
                         GTOreDictUnificator.get(OrePrefixes.stick, Materials.Plutonium241, 4),
                         GTOreDictUnificator.get(OrePrefixes.foil, Materials.Plutonium241, 1),
-                        GTModHandler.getModItem(Forestry.ID, "frameImpregnated", 1, 0, missing))
+                        getModItem(Forestry.ID, "frameImpregnated", 1, 0))
                 .fluidInputs(Materials.Redstone.getMolten(576)).itemOutputs(GregtechItemList.HiveFrameMutagenic.get(1))
                 .duration(30 * SECONDS).eut(TierEU.RECIPE_HV).addTo(assemblerRecipes);
 
@@ -187,16 +152,16 @@ public class ScriptGregtechPlusPlus implements IScriptLoader {
                         GTOreDictUnificator.get(OrePrefixes.stickLong, Materials.Electrum, 4),
                         GTOreDictUnificator.get(OrePrefixes.stick, Materials.Electrum, 4),
                         GTOreDictUnificator.get(OrePrefixes.foil, Materials.Electrum, 1),
-                        GTModHandler.getModItem(Forestry.ID, "frameImpregnated", 1, 0, missing))
+                        getModItem(Forestry.ID, "frameImpregnated", 1, 0))
                 .fluidInputs(Materials.Redstone.getMolten(576))
                 .itemOutputs(GregtechItemList.HiveFrameAccelerated.get(1)).duration(30 * SECONDS).eut(TierEU.RECIPE_HV)
                 .addTo(assemblerRecipes);
 
-        addShapelessRecipe(CustomItemList.CoinBeesI.get(16L), GregtechItemList.HiveFrameVoid.get(1));
+        addShapelessRecipe(NHItemList.CoinBeesI.get(16), GregtechItemList.HiveFrameVoid.get(1));
         RecipeManagers.carpenterManager.addRecipe(
                 60,
                 FluidRegistry.getFluidStack("molten.redstone", 576),
-                getModItem(Forestry.ID, "frameImpregnated", 1, 0, missing),
+                getModItem(Forestry.ID, "frameImpregnated", 1, 0),
                 GregtechItemList.HiveFrameAccelerated.get(1),
                 "abc",
                 "def",
@@ -222,7 +187,7 @@ public class ScriptGregtechPlusPlus implements IScriptLoader {
         RecipeManagers.carpenterManager.addRecipe(
                 60,
                 FluidRegistry.getFluidStack("molten.redstone", 576),
-                getModItem(Forestry.ID, "frameImpregnated", 1, 0, missing),
+                getModItem(Forestry.ID, "frameImpregnated", 1, 0),
                 GregtechItemList.HiveFrameMutagenic.get(1),
                 "abc",
                 "def",
@@ -248,7 +213,7 @@ public class ScriptGregtechPlusPlus implements IScriptLoader {
         RecipeManagers.carpenterManager.addRecipe(
                 60,
                 FluidRegistry.getFluidStack("molten.redstone", 576),
-                getModItem(Forestry.ID, "frameImpregnated", 1, 0, missing),
+                getModItem(Forestry.ID, "frameImpregnated", 1, 0),
                 GregtechItemList.HiveFrameBusy.get(1),
                 "abc",
                 "def",
@@ -262,7 +227,7 @@ public class ScriptGregtechPlusPlus implements IScriptLoader {
                 'd',
                 GTOreDictUnificator.get(OrePrefixes.stick, Materials.BlueSteel, 1L),
                 'e',
-                getModItem(Minecraft.ID, "nether_star", 1, 0, missing),
+                getModItem(Minecraft.ID, "nether_star", 1, 0),
                 'f',
                 GTOreDictUnificator.get(OrePrefixes.stick, Materials.BlueSteel, 1L),
                 'g',
@@ -274,7 +239,7 @@ public class ScriptGregtechPlusPlus implements IScriptLoader {
         RecipeManagers.carpenterManager.addRecipe(
                 60,
                 FluidRegistry.getFluidStack("molten.redstone", 576),
-                getModItem(Forestry.ID, "frameImpregnated", 1, 0, missing),
+                getModItem(Forestry.ID, "frameImpregnated", 1, 0),
                 GregtechItemList.HiveFrameDecay.get(1),
                 "abc",
                 "def",
@@ -300,7 +265,7 @@ public class ScriptGregtechPlusPlus implements IScriptLoader {
         RecipeManagers.carpenterManager.addRecipe(
                 60,
                 FluidRegistry.getFluidStack("molten.redstone", 576),
-                getModItem(Forestry.ID, "frameImpregnated", 1, 0, missing),
+                getModItem(Forestry.ID, "frameImpregnated", 1, 0),
                 GregtechItemList.HiveFrameSlow.get(1),
                 "abc",
                 "def",
@@ -326,7 +291,7 @@ public class ScriptGregtechPlusPlus implements IScriptLoader {
         RecipeManagers.carpenterManager.addRecipe(
                 60,
                 FluidRegistry.getFluidStack("molten.redstone", 576),
-                getModItem(Forestry.ID, "frameImpregnated", 1, 0, missing),
+                getModItem(Forestry.ID, "frameImpregnated", 1, 0),
                 GregtechItemList.HiveFrameStabilize.get(1),
                 "abc",
                 "def",
@@ -352,7 +317,7 @@ public class ScriptGregtechPlusPlus implements IScriptLoader {
         RecipeManagers.carpenterManager.addRecipe(
                 60,
                 FluidRegistry.getFluidStack("molten.redstone", 576),
-                getModItem(Forestry.ID, "frameImpregnated", 1, 0, missing),
+                getModItem(Forestry.ID, "frameImpregnated", 1, 0),
                 GregtechItemList.HiveFrameArborist.get(1),
                 "abc",
                 "def",
@@ -366,7 +331,7 @@ public class ScriptGregtechPlusPlus implements IScriptLoader {
                 'd',
                 GTOreDictUnificator.get(OrePrefixes.stick, Materials.WoodSealed, 1L),
                 'e',
-                getModItem(Minecraft.ID, "paper", 1, 0, missing),
+                getModItem(Minecraft.ID, "paper", 1, 0),
                 'f',
                 GTOreDictUnificator.get(OrePrefixes.stick, Materials.WoodSealed, 1L),
                 'g',
@@ -375,5 +340,35 @@ public class ScriptGregtechPlusPlus implements IScriptLoader {
                 GTOreDictUnificator.get(OrePrefixes.stick, Materials.WoodSealed, 1L),
                 'i',
                 GTOreDictUnificator.get(OrePrefixes.stickLong, Materials.WoodSealed, 1L));
+    }
+
+    private void addThaumcraftAspects() {
+        TCMaterialAspectHelper.registerMaterialAspects("Selenium", "metallum", "custom2");
+        TCMaterialAspectHelper.registerMaterialAspects("Iodine", "metallum", "sano");
+        TCMaterialAspectHelper.registerMaterialAspects("Rhenium", "metallum", "alienis");
+        TCMaterialAspectHelper.registerMaterialAspects("Thallium", "metallum", "strontio");
+        TCMaterialAspectHelper.registerMaterialAspects("Germanium", "metallum", "custom1");
+        TCMaterialAspectHelper.registerMaterialAspects("Polonium", "metallum", "radio");
+        TCMaterialAspectHelper.registerMaterialAspects("Radium", "metallum", "radio");
+        TCMaterialAspectHelper.registerMaterialAspects("Protactinium", "metallum", "radio");
+        TCMaterialAspectHelper.registerMaterialAspects("Curium", "metallum", "radio");
+        TCMaterialAspectHelper.registerMaterialAspects("Neptunium", "metallum", "radio");
+        TCMaterialAspectHelper.registerMaterialAspects("Fermium", "metallum", "radio");
+        TCMaterialAspectHelper.registerMaterialAspects("Lithium7", "potentia", "custom1");
+        TCMaterialAspectHelper.registerMaterialAspects("Uranium232", "metallum", "radio");
+        TCMaterialAspectHelper.registerMaterialAspects("Uranium233", "metallum", "radio");
+        TCMaterialAspectHelper.registerMaterialAspects("Plutonium238", "metallum", "radio");
+        TCMaterialAspectHelper.registerMaterialAspects("AdvancedNitinol", "metallum", "custom2");
+        TCMaterialAspectHelper.registerMaterialAspects("AstralTitanium", "metallum", "custom4");
+        TCMaterialAspectHelper.registerMaterialAspects("CelestialTungsten", "metallum", "custom4");
+        TCMaterialAspectHelper.registerMaterialAspects("Hypogen", "metallum", "custom5");
+        TCMaterialAspectHelper.registerMaterialAspects("ChromaticGlass", "vitreus", "custom3");
+        TCMaterialAspectHelper.registerMaterialAspects("BlackMetal", "metallum", "radio");
+        TCMaterialAspectHelper.registerMaterialAspects("WhiteMetal", "metallum", "custom5");
+        TCMaterialAspectHelper.registerMaterialAspects("AncientGranite", "perditio", "custom3");
+        TCMaterialAspectHelper.registerMaterialAspects("Runite", "perditio", "custom3");
+        TCMaterialAspectHelper.registerMaterialAspects("Dragonblood", "metallum", "terminus");
+        TCMaterialAspectHelper.registerMaterialAspects("Staballoy", "metallum", "radio");
+        TCMaterialAspectHelper.registerMaterialAspects("Rhugnor", "terminus", "tempus");
     }
 }

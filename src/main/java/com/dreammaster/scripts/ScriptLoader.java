@@ -51,6 +51,8 @@ public class ScriptLoader {
                         new ScriptCompactKineticGenerators(),
                         new ScriptComputronics(),
                         new ScriptCoreMod(),
+                        new ScriptMoldRecycling(),
+                        new ScriptCreosoteBucketFuelValue(),
                         new ScriptDraconicEvolution(),
                         new ScriptEFR(),
                         new ScriptEMT(),
@@ -64,6 +66,7 @@ public class ScriptLoader {
                         new ScriptForbiddenMagic(),
                         new ScriptForestry(),
                         new ScriptForgeMultipart(),
+                        new ScriptFoundryRecipes(),
                         new ScriptGadomancy(),
                         new ScriptGalacticraft(),
                         new ScriptGalaxySpace(),
@@ -74,7 +77,7 @@ public class ScriptLoader {
                         new ScriptGregtechPlusPlus(),
                         new ScriptHardcoreEnderExpansion(),
                         new ScriptHarvestcraft(),
-                        new ScriptHarvestcraftNether(),
+                        new ScriptFether(),
                         new ScriptHoloInventory(),
                         new ScriptIguanaTweaks(),
                         new ScriptIndustrialApiary(),
@@ -89,6 +92,7 @@ public class ScriptLoader {
                         new ScriptMatterManipulator(),
                         new ScriptMechworks(),
                         new ScriptMinecraft(),
+                        new ScriptNanochipRecipes(),
                         new ScriptNatura(),
                         new ScriptNuclearControl(),
                         new ScriptOpenBlocks(),
@@ -96,6 +100,7 @@ public class ScriptLoader {
                         new ScriptOpenModularTurrets(),
                         new ScriptProjectRed(),
                         new ScriptRailcraft(),
+                        new ScriptRandomBoubles(),
                         new ScriptRandomThings(),
                         new ScriptRemoteIO(),
                         new ScriptRunicTablet(),
@@ -108,8 +113,8 @@ public class ScriptLoader {
                         new ScriptTaintedMagic(),
                         new ScriptTCCoreMod(),
                         new ScriptThaumcraft(),
-                        new ScriptThaumicBases(),
                         new ScriptThaumicEnergistics(),
+                        new ScriptThaumicBases(),
                         new ScriptThaumicExploration(),
                         new ScriptThaumicHorizons(),
                         new ScriptThaumicMachina(),
@@ -118,6 +123,7 @@ public class ScriptLoader {
                         new ScriptTinkersDefence(),
                         new ScriptTranslocator(),
                         new ScriptTwilightForest(),
+                        new ScriptVendingMachine(),
                         new ScriptWarpTheory(),
                         new ScriptWirelessRedstone(),
                         new ScriptWitchery(),
@@ -131,27 +137,31 @@ public class ScriptLoader {
         }
 
         ArrayList<String> errored = new ArrayList<>();
-        final long totalTimeStart = System.currentTimeMillis();
+        final long totalTimeStart = System.nanoTime();
         for (IScriptLoader script : scripts) {
             if (script.isScriptLoadable()) {
                 try {
-                    final long timeStart = System.currentTimeMillis();
+                    final long timeStart = System.nanoTime();
                     script.loadRecipes();
-                    final long timeToLoad = System.currentTimeMillis() - timeStart;
-                    MainRegistry.Logger.info("Loaded " + script.getScriptName() + " script in " + timeToLoad + " ms.");
+                    final long timeToLoad = System.nanoTime() - timeStart;
+                    MainRegistry.LOGGER.info(
+                            "Loaded {} script in {} ns ({} ms).",
+                            script.getScriptName(),
+                            timeToLoad,
+                            timeToLoad / 1_000_000);
                 } catch (Exception ex) {
                     errored.add(script.getScriptName());
-                    MainRegistry.Logger.error(
-                            "There was an error while loading " + script.getScriptName() + "! Printing stacktrace:");
+                    MainRegistry.LOGGER
+                            .error("There was an error while loading {}! Printing stacktrace:", script.getScriptName());
                     ex.printStackTrace();
                 }
             } else {
-                MainRegistry.Logger.info(
-                        "Missing dependencies to load " + script.getScriptName() + " script. It won't be loaded.");
+                MainRegistry.LOGGER
+                        .info("Missing dependencies to load {} script. It won't be loaded.", script.getScriptName());
             }
         }
-        final long totalTimeToLoad = System.currentTimeMillis() - totalTimeStart;
-        MainRegistry.Logger.info("Script loader took " + totalTimeToLoad + " ms.");
+        final long totalTimeToLoad = System.nanoTime() - totalTimeStart;
+        MainRegistry.LOGGER.info("Script loader took {} ns ({} ms).", totalTimeToLoad, totalTimeToLoad / 1_000_000);
         if (!errored.isEmpty()) throw new RuntimeException(
                 "Scripts " + errored + " thrown an exception! Scroll up the log to see the stacktrace!");
     }

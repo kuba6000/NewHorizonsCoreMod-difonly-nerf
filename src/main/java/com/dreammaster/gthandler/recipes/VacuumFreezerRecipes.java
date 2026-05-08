@@ -1,18 +1,18 @@
 package com.dreammaster.gthandler.recipes;
 
+import static com.dreammaster.scripts.IngredientFactory.getModItem;
 import static gregtech.api.enums.Mods.Avaritia;
 import static gregtech.api.recipe.RecipeMaps.vacuumFreezerRecipes;
 import static gregtech.api.util.GTRecipeBuilder.MINUTES;
 import static gregtech.api.util.GTRecipeBuilder.SECONDS;
 import static gregtech.api.util.GTRecipeBuilder.TICKS;
 
-import com.dreammaster.gthandler.CustomItemList;
+import com.dreammaster.item.NHItemList;
 
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
-import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
 
 public class VacuumFreezerRecipes implements Runnable {
@@ -20,8 +20,8 @@ public class VacuumFreezerRecipes implements Runnable {
     @Override
     public void run() {
 
-        GTValues.RA.stdBuilder().itemInputs(CustomItemList.GlowingMarshmallow.get(1L))
-                .itemOutputs(CustomItemList.Marshmallow.get(1L)).duration(40 * MINUTES).eut(TierEU.RECIPE_EV)
+        GTValues.RA.stdBuilder().itemInputs(NHItemList.GlowingMarshmallow.get())
+                .itemOutputs(NHItemList.Marshmallow.get()).duration(40 * MINUTES).eut(TierEU.RECIPE_EV)
                 .addTo(vacuumFreezerRecipes);
 
         GTValues.RA.stdBuilder().itemInputs(GTOreDictUnificator.get(OrePrefixes.ingotHot, Materials.Neutronium, 1L))
@@ -51,7 +51,7 @@ public class VacuumFreezerRecipes implements Runnable {
 
         GTValues.RA.stdBuilder().itemInputs(GTOreDictUnificator.get(OrePrefixes.ingotHot, Materials.MelodicAlloy, 1L))
                 .itemOutputs(GTOreDictUnificator.get(OrePrefixes.ingot, Materials.MelodicAlloy, 1L))
-                .duration(36 * SECONDS + 19 * TICKS).eut(4096).addTo(vacuumFreezerRecipes);
+                .duration(36 * SECONDS + 19 * TICKS).eut(TierEU.RECIPE_IV / 2).addTo(vacuumFreezerRecipes);
 
         GTValues.RA.stdBuilder()
                 .itemInputs(GTOreDictUnificator.get(OrePrefixes.ingotHot, Materials.CrystallinePinkSlime, 1L))
@@ -81,7 +81,7 @@ public class VacuumFreezerRecipes implements Runnable {
 
         GTValues.RA.stdBuilder().itemInputs(GTOreDictUnificator.get(OrePrefixes.ingotHot, Materials.Tantalum, 1L))
                 .itemOutputs(GTOreDictUnificator.get(OrePrefixes.ingot, Materials.Tantalum, 1L))
-                .duration(26 * SECONDS + 1 * TICKS).eut(TierEU.RECIPE_HV).addTo(vacuumFreezerRecipes);
+                .duration(12 * SECONDS + 10 * TICKS).eut(TierEU.RECIPE_HV).addTo(vacuumFreezerRecipes);
 
         GTValues.RA.stdBuilder().itemInputs(GTOreDictUnificator.get(OrePrefixes.ingotHot, Materials.EnderiumBase, 1L))
                 .itemOutputs(GTOreDictUnificator.get(OrePrefixes.ingot, Materials.EnderiumBase, 1L))
@@ -143,8 +143,8 @@ public class VacuumFreezerRecipes implements Runnable {
         if (Avaritia.isModLoaded()) {
 
             GTValues.RA.stdBuilder().itemInputs(GTOreDictUnificator.get(OrePrefixes.ingotHot, Materials.Infinity, 1L))
-                    .itemOutputs(GTModHandler.getModItem(Avaritia.ID, "Resource", 1L, 6))
-                    .duration(14 * SECONDS + 14 * TICKS).eut(TierEU.RECIPE_UHV).addTo(vacuumFreezerRecipes);
+                    .itemOutputs(getModItem(Avaritia.ID, "Resource", 1, 6)).duration(14 * SECONDS + 14 * TICKS)
+                    .eut(TierEU.RECIPE_UHV).addTo(vacuumFreezerRecipes);
 
         }
 
@@ -219,8 +219,8 @@ public class VacuumFreezerRecipes implements Runnable {
                 .itemOutputs(GTOreDictUnificator.get(OrePrefixes.ingot, Materials.Titanium, 1L))
                 .duration(7 * SECONDS + 4 * TICKS).eut(TierEU.RECIPE_HV).addTo(vacuumFreezerRecipes);
 
-        GTValues.RA.stdBuilder().itemInputs(CustomItemList.HotNetherrackBrick.get(1L))
-                .itemOutputs(CustomItemList.InfernalBrick.get(1L)).duration(10 * SECONDS).eut(TierEU.RECIPE_MV)
+        GTValues.RA.stdBuilder().itemInputs(NHItemList.HotNetherrackBrick.get())
+                .itemOutputs(NHItemList.InfernalBrick.get()).duration(10 * SECONDS).eut(TierEU.RECIPE_MV)
                 .addTo(vacuumFreezerRecipes);
 
     }

@@ -1,11 +1,11 @@
 package com.dreammaster.scripts;
 
+import static com.dreammaster.scripts.IngredientFactory.getModItem;
 import static gregtech.api.enums.Mods.IronTanks;
 import static gregtech.api.enums.Mods.IronTanksMinecarts;
 import static gregtech.api.enums.Mods.Minecraft;
 import static gregtech.api.enums.Mods.Railcraft;
 import static gregtech.api.recipe.RecipeMaps.assemblerRecipes;
-import static gregtech.api.util.GTModHandler.getModItem;
 import static gregtech.api.util.GTRecipeBuilder.SECONDS;
 
 import java.util.Arrays;
@@ -16,7 +16,7 @@ import net.minecraft.item.ItemStack;
 import com.indemnity83.irontank.reference.TankType;
 
 import gregtech.api.enums.GTValues;
-import gregtech.api.util.GTUtility;
+import gregtech.api.enums.TierEU;
 
 public class ScriptIronTankMinecarts implements IScriptLoader {
 
@@ -33,33 +33,28 @@ public class ScriptIronTankMinecarts implements IScriptLoader {
     @Override
     public void loadRecipes() {
         for (TankType type : TankType.values()) {
-            if (type == TankType.GLASS || type == TankType.OBSIDIAN) {
+            if (type == TankType.GLASS) {
                 continue;
             }
-            ItemStack tank = getModItem(IronTanks.ID, type.name, 1, 1, missing);
+            ItemStack tank = getModItem(IronTanks.ID, type.name, 1, 0);
             ItemStack cart = getModItem(
                     IronTanksMinecarts.ID,
                     "minecart_tank_" + secondderivative.irontankminecarts.IronTankMinecarts.tankTypeName(type),
                     1,
-                    0,
-                    missing);
+                    0);
             addShapedRecipe(
                     cart,
                     "craftingToolHardHammer",
                     tank,
                     "craftingToolWrench",
                     null,
-                    getModItem(Minecraft.ID, "minecart", 1, 0, missing),
+                    getModItem(Minecraft.ID, "minecart", 1, 0),
                     null,
                     null,
                     "craftingToolScrewdriver",
                     null);
-            GTValues.RA.stdBuilder()
-                    .itemInputs(
-                            getModItem(Minecraft.ID, "minecart", 1, 0, missing),
-                            tank,
-                            GTUtility.getIntegratedCircuit(1))
-                    .itemOutputs(cart).duration(5 * SECONDS).eut(16).addTo(assemblerRecipes);
+            GTValues.RA.stdBuilder().itemInputs(getModItem(Minecraft.ID, "minecart", 1, 0), tank).circuit(1)
+                    .itemOutputs(cart).duration(5 * SECONDS).eut(TierEU.RECIPE_LV / 2).addTo(assemblerRecipes);
         }
     }
 }

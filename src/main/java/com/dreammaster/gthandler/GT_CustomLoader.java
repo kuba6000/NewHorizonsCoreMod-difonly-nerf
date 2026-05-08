@@ -6,13 +6,10 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
 import com.dreammaster.item.NHItemList;
-import com.dreammaster.item.food.QuantumBread;
 import com.dreammaster.modfixes.biomesoplenty.BlockHarvestToolFix;
 import com.dreammaster.modfixes.enderIO.FrankenskullFix;
 
-import cpw.mods.fml.common.registry.GameRegistry;
 import gregtech.api.enums.Materials;
-import gregtech.api.enums.MaterialsUEVplus;
 import gregtech.api.enums.OrePrefixes;
 
 /**
@@ -29,7 +26,7 @@ public class GT_CustomLoader {
 
         ZPM(OrePrefixes.circuit.get(Materials.ZPM), OrePrefixes.wireGt04.get(Materials.YttriumBariumCuprate),
                 Materials.Naquadah, OrePrefixes.wireGt02.get(Materials.Naquadah),
-                OrePrefixes.gemExquisite.get(Materials.GarnetYellow), NHItemList.MysteriousCrystal.getIS(),
+                OrePrefixes.gemExquisite.get(Materials.GarnetYellow), NHItemList.MysteriousCrystal.get(),
                 "blockGlassZPM", Materials.Iridium, Materials.Naquadah),
 
         UV(OrePrefixes.circuit.get(Materials.UV), OrePrefixes.wireGt08.get(Materials.YttriumBariumCuprate),
@@ -47,11 +44,11 @@ public class GT_CustomLoader {
 
         UIV(OrePrefixes.circuit.get(Materials.UIV), OrePrefixes.wireGt08.get(Materials.Bedrockium),
                 Materials.NetherStar, OrePrefixes.wireGt02.get(Materials.NetherStar), null, null, "blockGlassUIV",
-                Materials.CosmicNeutronium, MaterialsUEVplus.TranscendentMetal),
+                Materials.CosmicNeutronium, Materials.TranscendentMetal),
 
         UMV(OrePrefixes.circuit.get(Materials.UMV), OrePrefixes.wireGt16.get(Materials.Bedrockium), Materials.Quantium,
-                OrePrefixes.wireGt02.get(Materials.Quantium), null, null, "blockGlassUMV",
-                MaterialsUEVplus.TranscendentMetal, MaterialsUEVplus.SpaceTime);
+                OrePrefixes.wireGt02.get(Materials.Quantium), null, null, "blockGlassUMV", Materials.TranscendentMetal,
+                Materials.SpaceTime);
 
         private Object _mCircuit;
         private Object _mHeatingCoil;
@@ -141,7 +138,6 @@ public class GT_CustomLoader {
     private static final GT_Recipe_Remover Remover = new GT_Recipe_Remover();
 
     public void run() {
-        GameRegistry.registerItem(QuantumBread.Instance(), "itemQuantumToast");
         if (EnderIO.isModLoaded()) {
             FrankenskullFix.fixEnderIO();
         }

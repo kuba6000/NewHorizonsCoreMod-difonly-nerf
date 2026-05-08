@@ -11,6 +11,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -78,7 +79,6 @@ public class BlockBabyChest extends BlockContainer implements ITileEntityProvide
             return true;
         } else {
             if (pWorld.getTileEntity(pX, pY, pZ) instanceof TileEntityBabyChest) {
-                TileEntityBabyChest tileEntity = (TileEntityBabyChest) pWorld.getTileEntity(pX, pY, pZ);
                 pPlayer.openGui(MainRegistry.instance, GuiHandler.GUI_BABYCHEST, pWorld, pX, pY, pZ);
             }
             return true;
@@ -172,4 +172,20 @@ public class BlockBabyChest extends BlockContainer implements ITileEntityProvide
     public void registerBlockIcons(IIconRegister pIconRegister) {
         blockIcon = pIconRegister.registerIcon("minecraft:planks_oak");
     }
+
+    @Override
+    public boolean hasComparatorInputOverride() {
+        return true;
+    }
+
+    @Override
+    public int getComparatorInputOverride(World pWorld, int pX, int pY, int pZ, int pSide) {
+        TileEntity tileentity = pWorld.getTileEntity(pX, pY, pZ);
+        if (tileentity instanceof IInventory) {
+            IInventory inventory = (IInventory) tileentity;
+            return Container.calcRedstoneFromInventory(inventory);
+        }
+        return 0;
+    }
+
 }
