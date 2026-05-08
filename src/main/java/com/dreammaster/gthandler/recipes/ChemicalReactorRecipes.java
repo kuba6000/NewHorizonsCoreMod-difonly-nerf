@@ -142,14 +142,14 @@ public class ChemicalReactorRecipes implements Runnable {
         GTValues.RA.stdBuilder()
                 .itemInputs(
                         GTOreDictUnificator.get(OrePrefixes.plate, Materials.Epoxid, 1),
-                        GTOreDictUnificator.get(OrePrefixes.foil, Materials.Gold, 8))
+                        GTOreDictUnificator.get(OrePrefixes.foil, Materials.Gold, 64))
                 .itemOutputs(ItemList.Circuit_Board_Epoxy.get(1L)).fluidInputs(Materials.SulfuricAcid.getFluid(500L))
                 .duration(30 * SECONDS).eut(TierEU.RECIPE_LV).addTo(UniversalChemical);
 
         GTValues.RA.stdBuilder()
                 .itemInputs(
                         ItemList.Circuit_Board_Epoxy.get(1L),
-                        GTOreDictUnificator.get(OrePrefixes.foil, Materials.Electrum, 8))
+                        GTOreDictUnificator.get(OrePrefixes.foil, Materials.Electrum, 64))
                 .itemOutputs(ItemList.Circuit_Board_Epoxy_Advanced.get(1L))
                 .fluidInputs(Materials.IronIIIChloride.getFluid(500L)).duration(60 * SECONDS).eut(TierEU.RECIPE_LV)
                 .addTo(UniversalChemical);
@@ -157,7 +157,7 @@ public class ChemicalReactorRecipes implements Runnable {
         GTValues.RA.stdBuilder()
                 .itemInputs(
                         ItemList.Circuit_Board_Epoxy.get(1L),
-                        GTOreDictUnificator.get(OrePrefixes.foil, Materials.Electrum, 8))
+                        GTOreDictUnificator.get(OrePrefixes.foil, Materials.Electrum, 64))
                 .itemOutputs(ItemList.Circuit_Board_Epoxy_Advanced.get(1L))
                 .fluidInputs(Materials.SodiumPersulfate.getFluid(1000L)).duration(60 * SECONDS).eut(TierEU.RECIPE_LV)
                 .addTo(UniversalChemical);
