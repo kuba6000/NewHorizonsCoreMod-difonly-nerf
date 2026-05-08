@@ -584,7 +584,7 @@ public class ChemicalReactorRecipes implements Runnable {
                             GTOreDictUnificator.get(OrePrefixes.dust, Materials.Aluminium, 36L),
                             GTBees.combs.getStackForType(CombType.INDIUM, 4),
                             GTUtility.getIntegratedCircuit(3))
-                    .itemOutputs(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Indium, 3L))
+                    .itemOutputs(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Indium, 2L))
                     .fluidInputs(new FluidStack(ItemList.sIndiumConcentrate, 72000))
                     .fluidOutputs(new FluidStack(ItemList.sLeadZincSolution, 72000)).duration(22 * SECONDS + 10 * TICKS)
                     .eut(TierEU.RECIPE_HV).addTo(multiblockChemicalReactorRecipes);
@@ -596,7 +596,7 @@ public class ChemicalReactorRecipes implements Runnable {
                             GTBees.combs.getStackForType(CombType.INDIUM, 8),
                             GTUtility.getIntegratedCircuit(2))
                     .itemOutputs(
-                            GTOreDictUnificator.get(OrePrefixes.dust, Materials.Indium, 6),
+                            GTOreDictUnificator.get(OrePrefixes.dust, Materials.Indium, 4),
                             GTOreDictUnificator.get(OrePrefixes.dust, Materials.TricalciumPhosphate, 5))
                     .duration(1 * SECONDS).eut(TierEU.RECIPE_LV).addTo(multiblockChemicalReactorRecipes);
 
@@ -604,7 +604,7 @@ public class ChemicalReactorRecipes implements Runnable {
                     .itemInputs(
                             GTOreDictUnificator.get(OrePrefixes.crushed, Materials.Indium, 4),
                             GTBees.combs.getStackForType(CombType.INDIUM, 16))
-                    .itemOutputs(GTOreDictUnificator.get(OrePrefixes.crushedPurified, Materials.Indium, 12))
+                    .itemOutputs(GTOreDictUnificator.get(OrePrefixes.crushedPurified, Materials.Indium, 8))
                     .fluidInputs(Materials.PhthalicAcid.getFluid(2688)).duration(14 * SECONDS + 8 * TICKS)
                     .eut(TierEU.RECIPE_IV).addTo(UniversalChemical);
 
@@ -612,7 +612,7 @@ public class ChemicalReactorRecipes implements Runnable {
                     .itemInputs(Roquesit.get(OrePrefixes.dust, 4), GTBees.combs.getStackForType(CombType.INDIUM, 4))
                     .itemOutputs(
                             GTOreDictUnificator.get(OrePrefixes.dust, Materials.Copper, 1),
-                            GTOreDictUnificator.get(OrePrefixes.dust, Materials.Indium, 3),
+                            GTOreDictUnificator.get(OrePrefixes.dust, Materials.Indium, 2),
                             GTOreDictUnificator.get(OrePrefixes.dust, Materials.Sulfur, 2))
                     .fluidInputs(Materials.PhthalicAcid.getFluid(90)).duration(3 * SECONDS + 4 * TICKS)
                     .eut(TierEU.RECIPE_HV).addTo(multiblockChemicalReactorRecipes);
