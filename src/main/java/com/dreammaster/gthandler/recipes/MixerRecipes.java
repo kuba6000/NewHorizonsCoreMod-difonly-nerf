@@ -745,7 +745,7 @@ public class MixerRecipes implements Runnable {
                 .duration(5 * SECONDS).eut(4).addTo(mixerRecipes);
 
         GTValues.RA.stdBuilder().itemInputs(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Neutronium, 1L))
-                .circuit(1).itemOutputs(NHItemList.RawNeutronium.get()).fluidInputs(Materials.Helium.getPlasma(144L))
+                .circuit(1).itemOutputs(NHItemList.RawNeutronium.get()).fluidInputs(Materials.Helium.getPlasma(1440L))
                 .duration(11 * SECONDS + 5 * TICKS).eut(TierEU.RECIPE_ZPM).addTo(mixerRecipes);
 
         // One Step Alloy Dust Mixer

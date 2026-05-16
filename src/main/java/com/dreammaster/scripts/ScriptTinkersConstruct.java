@@ -523,7 +523,8 @@ public class ScriptTinkersConstruct implements IScriptLoader {
         addShapelessRecipe(
                 getModItem(TinkerConstruct.ID, "CraftingSlab", 1, 0),
                 "craftingToolSaw",
-                getModItem(TinkerConstruct.ID, "CraftingStation", 1, 0));
+                getModItem(TinkerConstruct.ID, "CraftingStation", 1, 0),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.LV, 1L));
         GTModHandler.addCraftingRecipe(
                 getModItem(TinkerConstruct.ID, "ToolStationBlock", 1, 0),
                 new Object[] { "SPS", "SCS", " r ", 'S', "stickWood", 'P',

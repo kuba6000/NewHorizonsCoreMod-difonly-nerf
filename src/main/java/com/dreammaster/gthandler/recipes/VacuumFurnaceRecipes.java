@@ -36,9 +36,9 @@ public class VacuumFurnaceRecipes implements Runnable {
                             GTOreDictUnificator.get(OrePrefixes.dust, Materials.Zinc, 52L),
                             GTOreDictUnificator.get(OrePrefixes.dust, Materials.Iron, 64L),
                             GTOreDictUnificator.get(OrePrefixes.dust, Materials.Iron, 56L),
-                            GTOreDictUnificator.get(OrePrefixes.dust, Materials.Indium, 64L),
-                            GTOreDictUnificator.get(OrePrefixes.dust, Materials.Indium, 64L),
-                            GTOreDictUnificator.get(OrePrefixes.dust, Materials.Indium, 64L),
+                            GTOreDictUnificator.get(OrePrefixes.dust, Materials.Indium, 32L),
+                            GTOreDictUnificator.get(OrePrefixes.dust, Materials.Indium, 32L),
+                            GTOreDictUnificator.get(OrePrefixes.dust, Materials.Indium, 32L),
                             MaterialsElements.getInstance().GERMANIUM.getDust(15))
                     .fluidInputs(new FluidStack(GTPPFluids.SphaleriteFlotationFroth, 4000))
                     .fluidOutputs(new FluidStack(GTPPFluids.RedMud, 2000), Materials.Water.getFluid(2000))
@@ -53,7 +53,7 @@ public class VacuumFurnaceRecipes implements Runnable {
                             GTOreDictUnificator.get(OrePrefixes.dust, Materials.Iron, 64L),
                             GTOreDictUnificator.get(OrePrefixes.dust, Materials.Iron, 56L),
                             GTOreDictUnificator.get(OrePrefixes.dust, Materials.Cadmium, 50L),
-                            GTOreDictUnificator.get(OrePrefixes.dust, Materials.Indium, 30L))
+                            GTOreDictUnificator.get(OrePrefixes.dust, Materials.Indium, 20L))
                     .fluidInputs(new FluidStack(GTPPFluids.ChalcopyriteFlotationFroth, 4000))
                     .fluidOutputs(new FluidStack(GTPPFluids.RedMud, 2000), Materials.Water.getFluid(2000))
                     .eut((int) TierEU.RECIPE_IV).metadata(COIL_HEAT, 4500).duration(2 * MINUTES)

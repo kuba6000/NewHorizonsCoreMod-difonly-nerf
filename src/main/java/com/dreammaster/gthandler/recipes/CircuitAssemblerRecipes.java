@@ -321,7 +321,7 @@ public class CircuitAssemblerRecipes implements Runnable {
                             ItemList.Circuit_Parts_Capacitor.get(24),
                             ItemList.Circuit_Chip_Ram.get(16L),
                             GTOreDictUnificator.get(OrePrefixes.wireGt01, Materials.AnnealedCopper, 24))
-                    .itemOutputs(ItemList.Circuit_Elite.get(1L)).fluidInputs(tMat.getMolten(144L * tMultiplier * 2))
+                    .itemOutputs(ItemList.Circuit_Elite.get(1L)).fluidInputs(Materials.SoulInfusedMedium.getFluid(100L))
                     .requiresCleanRoom().duration(1 * MINUTES + 20 * SECONDS).eut(TierEU.RECIPE_HV)
                     .addTo(circuitAssemblerRecipes);
 
@@ -333,30 +333,30 @@ public class CircuitAssemblerRecipes implements Runnable {
                             ItemList.Circuit_Parts_CapacitorASMD.get(4L),
                             ItemList.Circuit_Chip_Ram.get(16L),
                             GTOreDictUnificator.get(OrePrefixes.wireGt01, Materials.AnnealedCopper, 16))
-                    .itemOutputs(ItemList.Circuit_Elite.get(1L)).fluidInputs(tMat.getMolten(144L * tMultiplier * 2))
+                    .itemOutputs(ItemList.Circuit_Elite.get(1L)).fluidInputs(Materials.SoulInfusedMedium.getFluid(100L))
                     .requiresCleanRoom().duration(40 * SECONDS).eut(TierEU.RECIPE_HV).addTo(circuitAssemblerRecipes);
 
             // Nanotech Circuits
             GTValues.RA.stdBuilder()
                     .itemInputs(
-                            ItemList.Circuit_Board_Epoxy_Advanced.get(1L),
-                            ItemList.Circuit_Chip_NanoCPU.get(1L),
-                            ItemList.Circuit_Parts_ResistorSMD.get(8L),
-                            ItemList.Circuit_Parts_CapacitorSMD.get(8L),
-                            ItemList.Circuit_Parts_TransistorSMD.get(8L),
-                            GTOreDictUnificator.get(OrePrefixes.wireFine, Materials.Electrum, 8))
+                            ItemList.Circuit_Board_Epoxy_Advanced.get(6L),
+                            ItemList.Circuit_Chip_NanoCPU.get(6L),
+                            ItemList.Circuit_Parts_ResistorSMD.get(48L),
+                            ItemList.Circuit_Parts_CapacitorSMD.get(48L),
+                            ItemList.Circuit_Parts_TransistorSMD.get(48L),
+                            GTOreDictUnificator.get(OrePrefixes.wireFine, Materials.Electrum, 48))
                     .itemOutputs(ItemList.Circuit_Nanoprocessor.get(1L))
                     .fluidInputs(tMat.getMolten(144L * tMultiplier / 2L)).requiresCleanRoom().duration(10 * SECONDS)
                     .eut(600).addTo(circuitAssemblerRecipes);
 
             GTValues.RA.stdBuilder()
                     .itemInputs(
-                            ItemList.Circuit_Board_Epoxy_Advanced.get(1L),
-                            ItemList.Circuit_Chip_NanoCPU.get(1L),
-                            ItemList.Circuit_Parts_ResistorASMD.get(2L),
-                            ItemList.Circuit_Parts_CapacitorASMD.get(2L),
-                            ItemList.Circuit_Parts_TransistorASMD.get(2L),
-                            GTOreDictUnificator.get(OrePrefixes.wireFine, Materials.Electrum, 8))
+                            ItemList.Circuit_Board_Epoxy_Advanced.get(6L),
+                            ItemList.Circuit_Chip_NanoCPU.get(6L),
+                            ItemList.Circuit_Parts_ResistorASMD.get(12L),
+                            ItemList.Circuit_Parts_CapacitorASMD.get(12L),
+                            ItemList.Circuit_Parts_TransistorASMD.get(12L),
+                            GTOreDictUnificator.get(OrePrefixes.wireFine, Materials.Electrum, 48))
                     .itemOutputs(ItemList.Circuit_Nanoprocessor.get(1L))
                     .fluidInputs(tMat.getMolten(144L * tMultiplier / 2L)).requiresCleanRoom().duration(5 * SECONDS)
                     .eut(600).addTo(circuitAssemblerRecipes);
@@ -444,24 +444,24 @@ public class CircuitAssemblerRecipes implements Runnable {
 
             GTValues.RA.stdBuilder()
                     .itemInputs(
-                            ItemList.Circuit_Board_Fiberglass_Advanced.get(1L),
-                            ItemList.Circuit_Chip_QuantumCPU.get(1L),
-                            ItemList.Circuit_Chip_NanoCPU.get(1L),
-                            ItemList.Circuit_Parts_CapacitorSMD.get(12L),
-                            ItemList.Circuit_Parts_TransistorSMD.get(12L),
-                            GTOreDictUnificator.get(OrePrefixes.wireFine, Materials.Platinum, 16))
+                            ItemList.Circuit_Board_Fiberglass_Advanced.get(6L),
+                            ItemList.Circuit_Chip_QuantumCPU.get(6L),
+                            ItemList.Circuit_Chip_NanoCPU.get(6L),
+                            ItemList.Circuit_Parts_CapacitorSMD.get(72L),
+                            ItemList.Circuit_Parts_TransistorSMD.get(72L),
+                            GTOreDictUnificator.get(OrePrefixes.wireFine, Materials.Platinum, 96))
                     .itemOutputs(ItemList.Circuit_Quantumprocessor.get(1L))
                     .fluidInputs(tMat.getMolten(144L * tMultiplier / 2L)).requiresCleanRoom().duration(10 * SECONDS)
                     .eut(2400).addTo(circuitAssemblerRecipes);
 
             GTValues.RA.stdBuilder()
                     .itemInputs(
-                            ItemList.Circuit_Board_Fiberglass_Advanced.get(1L),
-                            ItemList.Circuit_Chip_QuantumCPU.get(1L),
-                            ItemList.Circuit_Chip_NanoCPU.get(1L),
-                            ItemList.Circuit_Parts_CapacitorASMD.get(3L),
-                            ItemList.Circuit_Parts_TransistorASMD.get(3L),
-                            GTOreDictUnificator.get(OrePrefixes.wireFine, Materials.Platinum, 16))
+                            ItemList.Circuit_Board_Fiberglass_Advanced.get(6L),
+                            ItemList.Circuit_Chip_QuantumCPU.get(6L),
+                            ItemList.Circuit_Chip_NanoCPU.get(6L),
+                            ItemList.Circuit_Parts_CapacitorASMD.get(18L),
+                            ItemList.Circuit_Parts_TransistorASMD.get(18L),
+                            GTOreDictUnificator.get(OrePrefixes.wireFine, Materials.Platinum, 96))
                     .itemOutputs(ItemList.Circuit_Quantumprocessor.get(1L))
                     .fluidInputs(tMat.getMolten(144L * tMultiplier / 2L)).requiresCleanRoom().duration(5 * SECONDS)
                     .eut(2400).addTo(circuitAssemblerRecipes);

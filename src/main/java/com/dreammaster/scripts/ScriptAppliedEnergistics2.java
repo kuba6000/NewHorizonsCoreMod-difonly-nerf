@@ -2254,7 +2254,7 @@ public class ScriptAppliedEnergistics2 implements IScriptLoader {
         GTValues.RA.stdBuilder()
                 .itemInputs(
                         GTOreDictUnificator.get(OrePrefixes.dust, Materials.CertusQuartz, 1),
-                        GTOreDictUnificator.get(OrePrefixes.dust, Materials.Redstone, 1))
+                        GTOreDictUnificator.get(OrePrefixes.dust, Materials.MysteriousCrystal, 1))
                 .itemOutputs(GTOreDictUnificator.get(OrePrefixes.dust, Materials.CertusQuartzCharged, 1))
                 .duration(30 * SECONDS).eut(TierEU.RECIPE_LV).addTo(UniversalChemical);
         GTValues.RA.stdBuilder()

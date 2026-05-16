@@ -315,8 +315,8 @@ public class AssemblerRecipes implements Runnable {
 
         GTValues.RA.stdBuilder()
                 .itemInputs(
-                        GTOreDictUnificator.get(OrePrefixes.wireGt02, Materials.SuperconductorLuV, 64L),
-                        NHItemList.MicaInsulatorFoil.get(48))
+                        GTOreDictUnificator.get(OrePrefixes.wireGt02, Materials.SuperconductorLuV, 128L),
+                        NHItemList.MicaInsulatorFoil.get(384))
                 .itemOutputs(ItemList.Casing_Coil_Superconductor.get(1L))
                 .fluidInputs(Materials.Trinium.getMolten(1440L)).duration(50 * SECONDS).eut(9001)
                 .addTo(assemblerRecipes);
@@ -1719,7 +1719,7 @@ public class AssemblerRecipes implements Runnable {
                         ItemList.Electric_Motor_HV.get(1L),
                         ItemList.Hull_HV.get(1L),
                         GTOreDictUnificator.get(OrePrefixes.pipeLarge, Materials.Polytetrafluoroethylene, 2L),
-                        GTOreDictUnificator.get(OrePrefixes.circuit, Materials.HV, 4),
+                        GTOreDictUnificator.get(OrePrefixes.circuit, Materials.EV, 4),
                         GTOreDictUnificator.get(OrePrefixes.rotor, Materials.StainlessSteel, 1))
                 .circuit(1).itemOutputs(ItemList.Machine_Multi_LargeChemicalReactor.get(1)).duration(10 * SECONDS)
                 .eut(TierEU.RECIPE_HV).addTo(assemblerRecipes);
@@ -3818,41 +3818,9 @@ public class AssemblerRecipes implements Runnable {
         GTValues.RA.stdBuilder()
                 .itemInputs(
                         GTOreDictUnificator.get(OrePrefixes.wireFine, Materials.Copper, 4),
-                        GTOreDictUnificator.get(OrePrefixes.dustSmall, Materials.GalliumArsenide, 1))
-                .circuit(4).itemOutputs(ItemList.Circuit_Parts_Diode.get(2L))
-                .fluidInputs(Materials.Glass.getMolten(288L)).duration(30 * SECONDS).eut(TierEU.RECIPE_LV)
-                .addTo(assemblerRecipes);
-
-        GTValues.RA.stdBuilder()
-                .itemInputs(
-                        GTOreDictUnificator.get(OrePrefixes.wireFine, Materials.Copper, 4),
-                        GTOreDictUnificator.get(OrePrefixes.dustSmall, Materials.GalliumArsenide, 1))
-                .circuit(4).itemOutputs(ItemList.Circuit_Parts_Diode.get(2L))
-                .fluidInputs(FluidRegistry.getFluidStack("glass.molten", 1000)).duration(30 * SECONDS)
-                .eut(TierEU.RECIPE_LV).addTo(assemblerRecipes);
-
-        GTValues.RA.stdBuilder()
-                .itemInputs(
-                        GTOreDictUnificator.get(OrePrefixes.wireFine, Materials.Copper, 4),
                         ItemList.Circuit_Silicon_Wafer.get(1L))
                 .circuit(4).itemOutputs(ItemList.Circuit_Parts_Diode.get(2L))
                 .fluidInputs(Materials.Polyethylene.getMolten(144L)).duration(30 * SECONDS).eut(TierEU.RECIPE_LV)
-                .addTo(assemblerRecipes);
-
-        GTValues.RA.stdBuilder()
-                .itemInputs(
-                        GTOreDictUnificator.get(OrePrefixes.wireFine, Materials.Copper, 4),
-                        ItemList.Circuit_Silicon_Wafer.get(1L))
-                .circuit(4).itemOutputs(ItemList.Circuit_Parts_Diode.get(1L))
-                .fluidInputs(FluidRegistry.getFluidStack("glass.molten", 1000)).duration(30 * SECONDS)
-                .eut(TierEU.RECIPE_LV).addTo(assemblerRecipes);
-
-        GTValues.RA.stdBuilder()
-                .itemInputs(
-                        GTOreDictUnificator.get(OrePrefixes.wireFine, Materials.Copper, 4),
-                        ItemList.Circuit_Silicon_Wafer.get(1L))
-                .circuit(4).itemOutputs(ItemList.Circuit_Parts_Diode.get(1L))
-                .fluidInputs(Materials.Glass.getMolten(288L)).duration(30 * SECONDS).eut(TierEU.RECIPE_LV)
                 .addTo(assemblerRecipes);
 
         GTValues.RA.stdBuilder()
